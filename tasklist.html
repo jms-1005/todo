@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <style>
+        .taskitem{
+            padding: 10px;
+            border-bottom: 1px solid gray;
+        }
+
+        .complete{
+            text-decoration: line-through;
+            background-color: #f1f1f1;
+        }
+        .deleted{
+            display: none;
+        }
+    </style>
+</head>
+<body class="container">
+
+    <h2>My ToDo List</h2>
+    <input type="text" id="newtask" class="form-control">
+    <button class="btn btn-primary mt-3 w-100" onclick="addTask(document.getElementById('newtask').value)" >Add Task</button>
+    <div class="tasks">
+
+    </div>
+    
+</body>
+<script>
+
+let tasks = [
+    { task: "run", isComplete: false, isDeleted: false},
+    { task: "walk", isComplete: false, isDeleted: false},
+    { task: "workout", isComplete: false, isDeleted: false}
+];
+
+function addTask(newtask) {
+// const addTask = (newtask) => {
+    tasks.push({
+        task: newtask,
+        isComplete: false,
+        isDeleted: false
+    })
+    displayTaskList();
+}
+
+const setTaskComplete = (index) => {
+    tasks[index].isComplete = !tasks[index].isComplete;
+}
+
+const deleteTask = (index) => {
+    tasks[index].isDeleted = true;
+}
+
+
+
+const displayTaskList = () => {
+    $(".tasks").html('');
+    for(let i=tasks.length-1; i>=0; i--){
+        $(".tasks").append(`
+            <div class="taskitem" 
+                onclick="setTaskComplete(${ i })"
+                ondblclick="deleteTask(${ i })"
+            >${ tasks[i].task }</div>
+        `)
+    }
+} 
+
+</script>
+</html>
